@@ -1,10 +1,11 @@
 # Project Setup Guide
 
+AceLearn is a learning management system with intutive UI.
 This guide provides step-by-step instructions to set up and run the project, which comprises a Spring Boot backend and a React frontend.
 
 ## Prerequisites
 
-- **MySQL**: Ensure MySQL is installed on your system.
+- **MySQL Workbench**: Ensure MySQL is installed on your system.
 - **IntelliJ IDEA**: Recommended for backend development.
 - **Visual Studio Code (VSCode)**: Recommended for frontend development.
 - **Node.js and npm**: Required for the React frontend.
@@ -22,12 +23,9 @@ This guide provides step-by-step instructions to set up and run the project, whi
    - This command creates a new database named `management_system`.
 
 
+## 2.Project Setup
 
-## 2. Backend Setup (Spring Boot)
-
-1. **Open Backend in IntelliJ IDEA**:
-   - Navigate to the `AceLearn/backend` directory.
-   - Open this directory in IntelliJ IDEA.
+1. **Open `AceLearn/backend` in IntelliJ IDEA**:
 
 2. **Configure Database Connection**:
    - In the `src/main/resources` directory, locate the `application.properties` file.
@@ -46,16 +44,18 @@ This guide provides step-by-step instructions to set up and run the project, whi
    - In IntelliJ IDEA, run the `main` method in the main application class (usually annotated with `@SpringBootApplication`).
    - Ensure the application starts without errors and connects to the `management_system` database.
 
-## 3. Frontend Setup (React)
-
-1. **Open Project in VSCode**:
+2. **Open Project in VSCode**:
    - Open the entire project directory in Visual Studio Code.
 
-2. **Backend (Django) Setup**:
+1. **Backend (Django) Setup**:
    - Open a terminal in VSCode.
    - Navigate to the `backend-lexor` directory:
      ```bash
      cd backend-lexor
+     ```
+   - install python dependencies:
+     ```bash
+     python pip install -r requirement.txt
      ```
    - Run the Django development server:
      ```bash
@@ -63,7 +63,7 @@ This guide provides step-by-step instructions to set up and run the project, whi
      ```
    - Ensure the server starts without errors.
 
-3. **Frontend Setup**:
+2. **Frontend Setup**:
    - Open another terminal in VSCode.
    - Navigate to the `frontend` directory:
      ```bash
@@ -83,5 +83,3 @@ This guide provides step-by-step instructions to set up and run the project, whi
 
 - Ensure that the backend servers (both Spring Boot and Django) are running before starting the React frontend to avoid any API connection issues.
 - If you encounter any issues during setup or execution, consult the respective documentation for Spring Boot, Django, and React, or seek assistance from the development community.
-
-By following these steps, you should have the project up and running successfully.
