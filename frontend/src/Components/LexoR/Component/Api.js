@@ -150,7 +150,7 @@ export const savecode =async (language, sourceCode,pid,uid,issolved)=>
   
   }
 
-  const GEMINI_API_KEY = "AIzaSyBHTnvC5tT88M5Zpi4cx5RWzi-dB8a-QIQ";
+  const GEMINI_API_KEY = "";
 
 // Creating Axios instance for Gemini API
 const GEMINI_API = axios.create({
