@@ -15,12 +15,12 @@ body {
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: rgb(35, 35, 85);
+  /* color: rgb(35, 35, 85); */
 }
 
 span {
   font-size: 0.9rem;
-  color: #757373;
+  /* color: #757373; */
 }
 
 h6 {

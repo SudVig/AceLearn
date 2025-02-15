@@ -251,10 +251,13 @@ class SolvedView(APIView):
         existing_record = Solved.objects.filter(pid=pid, uid=uid).first()
 
         if existing_record:
-
+            print(request.data)
             serializer = SolvedSerializer(existing_record, data=request.data)
+
+            print("Serialized")
             if serializer.is_valid():
-                serializer.save() 
+                print("Saving")
+                print(serializer.save())
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -267,8 +270,8 @@ class SolvedView(APIView):
 
 class SolvedViewById(APIView):
 
-    def get(self, request, qid,userid):
-        solved = Solved.objects.get(pid=qid,uid=userid)
+    def get(self, request, pid,uid):
+        solved = Solved.objects.get(pid=pid,uid=uid)
         solved_details = SolvedSerializer(solved).data
         print(solved_details)
         return Response(solved_details)
@@ -277,6 +280,7 @@ class SolvedViewById(APIView):
         solved = Solved.objects.get(sid=id)
         solved.delete()
         return Response("Solved Deleted")
+    
 
 class Userverification(APIView):
     def get(self, request, username, password):
@@ -298,7 +302,7 @@ class Userprofile(APIView):
         solved_hard_count=0
         # Attempt to retrieve user details
         try:
-            user = User.objects.get(uid=uid)
+            user = User.objects.get(id=uid)
         except User.DoesNotExist:
             return Response({
                 "success": False,

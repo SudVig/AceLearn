@@ -1,20 +1,16 @@
-import React, { useState, useRef, useEffect, useReducer } from 'react';
-import Ide from './widgets/Ide';
-import Question from './widgets/Question';
-import { CODE_SNIPPETS } from './Constants/Constant';
-import { executeCode, getTestcaseById, savecode } from './Api';
-import { useParams } from 'react-router';
-import { getSnippetById } from './Api';
-import { UserContext } from '../App';
-import { useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import Ide from "./widgets/Ide";
+import Question from "./widgets/Question";
+import { executeCode, getTestcaseById, savecode, getSnippetById } from "./Api";
+import { useParams } from "react-router";
+
 
 function Coding() {  
-  const { loginId, setloginid } = useContext(UserContext);
-  const [userId,uid]=useState(loginId);
+  const loginId  = localStorage.getItem('loginid'); // Use loginId directly from context
   const { pblm_id } = useParams();
   const [qid, setqid] = useState(pblm_id);
   const [value, setValue] = useState("");
-  const [Language, setLanguage] = useState('java');
+  const [Language, setLanguage] = useState("java");
   const editorRef = useRef();
   const [resp, setResp] = useState(null);
   const [isErr, setErr] = useState(false);
@@ -22,34 +18,26 @@ function Coding() {
   const [isRun, setRun] = useState(false);
   const [testcase, setTestcase] = useState([]);
   const [result, setResult] = useState([]);
-  
   const [testCasepassed, setTestcasepassed] = useState(0);
-  const [totalTestCases, setTotalTestCases] = useState(result.length);
-  
+  const [totalTestCases, setTotalTestCases] = useState(0);
+  const [solved, setSolved] = useState(false);
 
   useEffect(() => {
     const fetchCases = async () => {
       const temp = await getTestcaseById(qid);
       setTestcase(temp);
       setTotalTestCases(temp.length);
-      try{
-      const val=await getSnippetById(qid,Language);
-   
-      setValue(val.snippets)
+      
+      try {
+        const val = await getSnippetById(qid, Language);
+        setValue(val.snippets);
+      } catch (e) {
+        setValue(Language === "python" ? "# write your code" : "// write your code");
       }
-      catch(e)
-      {
-        if(Language==="python")
-          setValue("# write your code")
-          else
-          setValue("// write your code")
-      } // Set total test cases based on fetched data
     };
-    
   
     fetchCases();
-
-  }, [qid,Language]); // Only depend on qid
+  }, [qid, Language]);
 
   const compile = async (sourceCode, cmdargs) => {
     try {
@@ -59,7 +47,6 @@ function Coding() {
         return res;
       } else {
         setErr(true);
-        
         return res;
       }
     } catch (err) {
@@ -73,15 +60,16 @@ function Coding() {
     setTestcasepassed(0);
     setRun(true);
     setLoading(true);
+    
     const sourceCode = editorRef.current.getValue();
-
     if (!sourceCode) {
       setLoading(false);
-      return; // Exit if there is no source code
+      return;
     }
 
     const results = [];
-    let local=0;
+    let localPassed = 0;
+    
     for (const element of testcase) {
       const tempObj = { ...element, output: "", err: false, iscorrect: false };
 
@@ -89,54 +77,53 @@ function Coding() {
         const resp = await compile(sourceCode, element.tinput);
         tempObj.output = resp.run.output;
         tempObj.iscorrect = tempObj.output.trim() === element.toutput.trim();
+        
         if (tempObj.iscorrect) {
-          local=local+1;
-          setTestcasepassed(local);
+          localPassed++;
+          setTestcasepassed(localPassed);
         }
       } catch (error) {
         console.error(error);
         tempObj.err = true;
-        setErr(true) // Mark error state
+        setErr(true);
       }
 
       results.push(tempObj);
     }
+
     setResult(results);
     setLoading(false);
     setRun(true);
-   
 
-    
-
-   
-
-    if(local===totalTestCases )
-
-    {
-      console.log("Going to savve"+uid)
-      await savecode(Language,value,pblm_id,uid,true)
+    if (localPassed === totalTestCases) {
+      console.log("Saving code:", { Language, value, qid, userId: loginId });
+      await savecode(Language, value, qid, loginId, true);
+      setSolved(true);
       console.log("Saved the code");
     }
   };
 
-
-
   return (
-    <div className='min-w-screen bg-slate-900'>
+    <div className="min-w-screen bg-slate-900">
       <div className="flex flex-col md:flex-row h-screen md:overflow-hidden">
         <div className="flex-1 border-gray-200 md:border-b-0">
-          <Question qid={qid} testcase={testcase} />
+          <Question qid={qid} testcase={testcase} solved={solved} setSolved={setSolved}/>
         </div>
         <div className="flex-1 h-full bg-slate-600">
           <Ide
             value={value}
             setValue={setValue}
             Language={Language}
+            solved={solved} 
+            setSolved={setSolved}
             qid={qid}
             setLanguage={setLanguage}
             editorRef={editorRef}
             totalTestCases={totalTestCases}
-            runCode={() => { runCode(); setResult([]); }}
+            runCode={() => {
+              runCode();
+              setResult([]);
+            }}
             resp={resp}
             isErr={isErr}
             isLoading={isLoading}

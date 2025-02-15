@@ -81,14 +81,14 @@ export const savecode =async (language, sourceCode,pid,uid,issolved)=>
       "uid":uid,
       "code":sourceCode,
       "lang":language,
-      "issolved":issolved
+      "solved":issolved
   });
       const response=await DB_API.post("solved/",{
           "pid":pid,
           "uid":uid,
           "code":sourceCode,
           "lang":language,
-          "issolved":issolved
+          "solved":issolved
       })
   
       return response.data;
@@ -137,6 +137,14 @@ export const savecode =async (language, sourceCode,pid,uid,issolved)=>
   export const getisSolved=async (uid,pid)=>{
 
     const response=await DB_API.get("issolved/"+uid+"/"+pid+"/")
+    
+    return response.data
+  
+  }
+
+  export const Solved=async (uid,pid)=>{
+
+    const response=await DB_API.get("solved/"+uid+"/"+pid+"/")
     
     return response.data
   

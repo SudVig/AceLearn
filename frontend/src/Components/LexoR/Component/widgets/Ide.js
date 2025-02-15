@@ -3,15 +3,16 @@ import Editor from '@monaco-editor/react';
 import Languageselector from './Languageselector';
 import { FaPlay } from 'react-icons/fa';
 import Output from './Output';
-import { getSnippetById } from '../Api';
+import { getSnippetById,Solved } from '../Api';
+import { faJ } from '@fortawesome/free-solid-svg-icons';
 
 function Ide({ 
   value, setValue, qid, Language, setLanguage, editorRef, 
   runCode, isLoading, isRun, setLoading, setRun, 
   isErr, resp, testcase, settestcase, testCasepassed, 
-  totalTestCases 
+  totalTestCases ,solved,setSolved
 }) {
-  const onMount = (editor) => {
+  const onMount = async (editor) => {
     editorRef.current = editor;
     editor.updateOptions({
       fontSize: 16,
@@ -19,13 +20,35 @@ function Ide({
       scrollBeyondLastLine: false,
       readOnly: false,
     });
+
+    const res=await Solved(uid, qid);
+    if(res.solved)
+    {
+      setSolved(true);
+      setValue(res.code);
+      setLanguage(res.lang);
+    }
+
+    
   };
 
+
+  const uid=localStorage.getItem('loginid'); 
   const onSelect = async (language) => {
     setLanguage(language);
     try {
-      const val = await getSnippetById(qid, language);
-      setValue(val.snippets);
+   
+      const res=await Solved(uid, qid);
+    if(res.solved && language===res.lang)
+    {
+      setSolved(true);
+      setValue(res.code);
+      setLanguage(res.lang);
+    }else{
+        const val = await getSnippetById(qid, language);
+        setValue(val.snippets);
+      }
+      
     } catch {
       setValue(language === "python" ? "# write your code" : "// write your code");
     }

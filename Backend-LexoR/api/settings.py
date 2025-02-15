@@ -84,8 +84,18 @@ DATABASES = {
         # 'HOST': 'dpg-csdnm7d6l47c73de8geg-a.oregon-postgres.render.com',
         # 'PORT': '5432',
 
-         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+       
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'management_system',  # The name of your MySQL database
+        'USER': 'root',  # Your MySQL username
+        'PASSWORD': 'root',  # Your MySQL password
+        'HOST': 'localhost',  # If MySQL is running on the same machine (local server)
+        'PORT': '3306',  # Default MySQL port (use 3306 unless you have changed it)
+       
+
+
+        #  'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

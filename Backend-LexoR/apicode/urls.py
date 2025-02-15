@@ -12,7 +12,7 @@ urlpatterns = [
     path('testcases/', TestcaseView.as_view()),
     path('testcases/<int:id>/', TestcaseViewById.as_view()),
     path('solved/', SolvedView.as_view()),
-    path('solved/<int:qid>/<int:userid>/', SolvedViewById.as_view()),
+    path('solved/<int:pid>/<int:uid>/', SolvedViewById.as_view()),
     path('verify/<str:username>/<str:password>/', Userverification.as_view(), name='user-verification'),
     path('profile/<int:uid>/', Userprofile.as_view(), name='user-profile'),
      path('problem-status/<int:uid>/', ProblemStatus.as_view(), name='problem-status'),

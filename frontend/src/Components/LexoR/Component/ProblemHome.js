@@ -6,6 +6,8 @@ import { UserContext } from '../../../App'; // Adjust the path as needed
 import { getProfileById } from './Api';
 import { useNavigate } from 'react-router';
 
+import Navbar from '../../Navbar'
+
 function ProblemHome() {
   const { loginId, setloginid } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,12 +41,13 @@ function ProblemHome() {
 
   return (
     <div className='relative bg-gradient-to-br from-slate-900 to-slate-800'> 
+    <Navbar/>
       <div id="ov" className='min-h-screen min-w-screen flex flex-row overflow-x-hidden'>
       
          
-        
+
         <Problemlist isOpen={isOpen} setisOpen={setIsOpen} uid={loginId} />
-        {/* <Sidebar isOpen={isOpen} setisOpen={setIsOpen} profile={profile} loginId={loginId} setloginid={setloginid} /> */}
+        <Sidebar isOpen={isOpen} setisOpen={setIsOpen} profile={profile} loginId={loginId} setloginid={setloginid} /> 
       </div>
     </div>
   );

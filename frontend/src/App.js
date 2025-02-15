@@ -24,6 +24,7 @@ import certificate from './Components/certificate';
 import Forum from './Components/forum';
 import ProblemHome from './Components/LexoR/Component/ProblemHome';
 import React, { createContext, useState} from 'react';
+import Coding from './Components/LexoR/Component/Coding';
 export const UserContext=createContext();
 
 const MyContextProvider=({children})=>{
@@ -65,6 +66,7 @@ function App() {
           <Route path='/Dtutors' Component={DTutors}></Route>
           <Route path='/Performance' Component={Performance} />
           <Route path='*' Component={ErrorPage}></Route>
+          <Route path="/coding/:pblm_id" element={<Coding/>}></Route>
         </Routes>
       </BrowserRouter>
       </MyContextProvider>

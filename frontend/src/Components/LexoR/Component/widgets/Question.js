@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { getisSolved, getQuestion } from '../Api';
-import { UserContext } from '../../App';
+
 import { RingLoader } from 'react-spinners';
 
-function Question({ qid, testcase = [] }) {
-  const { loginId } = useContext(UserContext);
-  const [solved, setSolved] = useState(false);
+function Question({ qid, testcase = [],solved,setSolved }) {
+  const loginId  = localStorage.getItem('loginid');
+  
   const [ques, setQues] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -80,9 +80,9 @@ function Question({ qid, testcase = [] }) {
       <RingLoader color="#ffffff" />
     </div>
   ) : (
-    <div className="min-h-screen bg-slate-800 sm:w-full text-white p-10 h-full md:overflow-auto">
+    <div className="min-h-screen bg-slate-800 sm:w-full text-white p-10 md:overflow-auto">
       <div>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start">
           <h1 className="font-bold text-2xl flex justify-between items-center w-full">
             {ques.pname}
             {solved && (
