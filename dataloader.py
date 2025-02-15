@@ -80,7 +80,7 @@ def transfer_data(sqlite_connection, mysql_connection, excluded_table):
 
 def main():
     # Paths and credentials
-    sqlite_db_path = 'D:\project\AceLearn\Backend-LexoR\db.sqlite3'  # Replace with your SQLite DB path
+    sqlite_db_path = 'db.sqlite3'  # Replace with your SQLite DB path
     mysql_host = 'localhost'
     mysql_user = 'root'
     mysql_password = 'root'  # Replace with your MySQL password
