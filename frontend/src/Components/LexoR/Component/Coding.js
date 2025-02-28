@@ -3,6 +3,7 @@ import Ide from "./widgets/Ide";
 import Question from "./widgets/Question";
 import { executeCode, getTestcaseById, savecode, getSnippetById } from "./Api";
 import { useParams } from "react-router";
+import { UserContext } from "../../../App"; // Import context
 
 
 function Coding() {  
@@ -21,6 +22,7 @@ function Coding() {
   const [testCasepassed, setTestcasepassed] = useState(0);
   const [totalTestCases, setTotalTestCases] = useState(0);
   const [solved, setSolved] = useState(false);
+  const { NavHeight } = useContext(UserContext);
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -104,7 +106,7 @@ function Coding() {
   };
 
   return (
-    <div className="min-w-screen bg-slate-900">
+    <div className="min-w-screen bg-slate-900" style={{paddingTop: NavHeight}}>
       <div className="flex flex-col md:flex-row h-screen md:overflow-hidden">
         <div className="flex-1 border-gray-200 md:border-b-0">
           <Question qid={qid} testcase={testcase} solved={solved} setSolved={setSolved}/>

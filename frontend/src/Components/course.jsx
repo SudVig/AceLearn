@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useContext  } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Forum from "./forum";
@@ -6,7 +6,7 @@ import ReactPlayer from "react-player";
 import { Progress } from "antd";
 import { Button, Modal } from "antd";
 import Feedback from "./Feedback";
-
+import { UserContext } from "../App"; // Import context
 const Course = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -40,7 +40,7 @@ const Course = () => {
   const location = useLocation();
   const courseId = location.pathname.split("/")[2];
   const playerRef = useRef(null);
-
+  const { NavHeight } = useContext(UserContext);
   useEffect(() => {
     async function fetchCourse() {
       try {
@@ -121,14 +121,14 @@ const Course = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{paddingTop: NavHeight}}>Loading...</div>;
   }
 
   if (error) {
-    return <div>Something went wrong!</div>;
+    return <div style={{paddingTop: NavHeight}}>Something went wrong!</div>;
   }
   return (
-    <div>
+    <div style={{paddingTop: NavHeight}}>
       <h3
         style={{
           textAlign: "center",

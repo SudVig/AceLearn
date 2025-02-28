@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { useUserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
@@ -10,6 +10,8 @@ import c4 from "./images/python.jpg";
 import c5 from "./images/java.png";
 import c6 from "./images/css.png";
 import "./css/style.css";
+import { UserContext } from "../App";
+import Aurora from '../Design/Aurora';
 import {
   faGraduationCap,
   faAward,
@@ -27,54 +29,104 @@ import Footer from "./header and footer/Footer";
 function Home() {
   const navigate = useNavigate();
   const authToken = localStorage.getItem("token");
+  const { NavHeight } = useContext(UserContext);
   return (
-    <div>
-      <Navbar page={"home"} />
+    <div style={{paddingTop: NavHeight}}>
+      {/* <Navbar page={"home"} /> */}
       <div>
-        <section id="home">
-          <h2>Enhance your future with EduVerse Academy</h2>
-          <p>
-            {" "}
-            OneYes Academy is a massive open online course provider, and its
-            learning experience arranges coursework into a series of modules and
-            lessons that can include videos, text notes, and assessment tests.
-          </p>
-          <div className="btn">
-            <a className="blue" href="#">
-              Learn More
-            </a>
-            <a className="yellow" href="#">
-              Visit Courses
-            </a>
-          </div>
-        </section>
-        <section id="features">
-          <h1>Awesome Features</h1>
-          <p>Chance to enhance yourself</p>
-          <div className="fea-base">
-            <div className="fea-box">
-              <FontAwesomeIcon icon={faGraduationCap} className="i" />
-              <h3>Scholarship Facility</h3>
-              <p>Originality is the essence of true scholarship. </p>
-            </div>
-            <div className="fea-box">
-              <FontAwesomeIcon icon={faStar} className="i" />
-              <h3>Valuable Courses</h3>
-              <p>
-                Online education is like a rising tide, it's going to lift all
-                boats.{" "}
-              </p>
-            </div>
-            <div className="fea-box">
-              <FontAwesomeIcon icon={faAward} className="i" />
-              <h3>Global Certification</h3>
-              <p>
-                A certificate without knowledge is like a gun without bullets in
-                your hand.{" "}
-              </p>
-            </div>
-          </div>
-        </section>
+        
+<section
+  id="home"
+  className="relative w-full bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#334155] text-white py-16 px-6 md:px-12 lg:px-24 min-h-screen flex flex-col justify-center items-center text-center space-y-6 overflow-hidden">
+  
+  {/* Aurora or abstract background touch */}
+  <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+    <Aurora
+      colorStops={["#38bdf8", "#6366f1", "#9333ea"]}
+      blend={0.7}
+      amplitude={0.8}
+      speed={0.6}
+    />
+  </div>
+
+  {/* Content Box */}
+  <div className="relative z-10">
+    <h2 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+      Welcome to EduVerse Academy
+    </h2>
+    <p className="text-gray-300 max-w-3xl leading-relaxed">
+      Empower your learning journey with world-class courses and expert instructors. Step into the future of education.
+    </p>
+    <div className="flex space-x-6 mt-6">
+      <a
+        href="#"
+        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-8 py-3 rounded-lg shadow-xl hover:scale-105 hover:bg-gradient-to-l transition-transform"
+      >
+        Get Started
+      </a>
+      <a
+        href="#"
+        className="bg-gradient-to-r from-teal-400 to-green-500 text-white font-semibold px-8 py-3 rounded-lg shadow-xl hover:scale-105 hover:bg-gradient-to-l transition-transform"
+      >
+        Browse Courses
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section
+  id="features"
+  className="bg-gradient-to-r from-[#111111] via-[#1a1a1a] to-[#111111] text-white py-16"
+>
+  <div className="text-center mb-12">
+    <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#9333ea]">
+      Awesome Features
+    </h1>
+    <p className="text-gray-300 text-lg mt-2">Chance to enhance yourself</p>
+  </div>
+
+  <div className="flex flex-wrap justify-center gap-8">
+    {/* Scholarship Box */}
+    <div className="fea-box bg-[#1a1a1a] rounded-2xl p-6 w-80 text-center shadow-lg border border-gray-700">
+      <FontAwesomeIcon
+        icon={faGraduationCap}
+        className="text-4xl text-[#38bdf8] mb-4"
+      />
+      <h3 className="text-xl font-semibold text-white">Scholarship Facility</h3>
+      <p className="text-gray-400 mt-2">
+        Originality is the essence of true scholarship.
+      </p>
+    </div>
+
+    {/* Valuable Courses Box */}
+    <div className="fea-box bg-[#1a1a1a] rounded-2xl p-6 w-80 text-center shadow-lg border border-gray-700">
+      <FontAwesomeIcon
+        icon={faStar}
+        className="text-4xl text-[#6366f1] mb-4"
+      />
+      <h3 className="text-xl font-semibold text-white">Valuable Courses</h3>
+      <p className="text-gray-400 mt-2">
+        Online education is like a rising tide, it's going to lift all boats.
+      </p>
+    </div>
+
+    {/* Global Certification Box */}
+    <div className="fea-box bg-[#1a1a1a] rounded-2xl p-6 w-80 text-center shadow-lg border border-gray-700">
+      <FontAwesomeIcon
+        icon={faAward}
+        className="text-4xl text-[#9333ea] mb-4"
+      />
+      <h3 className="text-xl font-semibold text-white">Global Certification</h3>
+      <p className="text-gray-400 mt-2">
+        A certificate without knowledge is like a gun without bullets in your hand.
+      </p>
+    </div>
+  </div>
+</section>
+
         <section id="course">
           <h1>Our Popular Courses</h1>
           <p>10,000+ enrolled</p>

@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import ImgUpload from "./ImgUpload";
 import Performance from "./DashBoard/Performance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-
+import { UserContext } from "../App"; // Import context
 
 function Profile() {
   const navigate = useNavigate();
-  const authToken = localStorage.getItem("token");
+
+   const { NavHeight } = useContext(UserContext);
+   const authToken = localStorage.getItem("token");
    const id = localStorage.getItem("id");
   const [userDetails, setUserDetails] = useState(null);
   const [profileImage, setProfileImage] = useState(localStorage.getItem("profileImage") || "");
@@ -57,8 +59,8 @@ function Profile() {
 
 
   return (
-    <div>
-      <Navbar page={"profile"} />
+    <div style={{paddingTop: NavHeight}}>
+      {/* <Navbar page={"profile"} /> */}
       <div className="profile-card" id="pbg" style={{ marginTop: '3%' }}>
         <ImgUpload onChange={handleImageChange} src={profileImage} />
         <h2 className="profile-name">{userDetails?.username}</h2>

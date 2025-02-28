@@ -9,7 +9,6 @@ function Login() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
   const { setUser } = useUserContext();
 
   const login = async (e) => {
@@ -17,28 +16,25 @@ function Login() {
     try {
       const response = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("email", email);
-        console.log(data.token);
+
         const userDetailsResponse = await fetch(
           `http://localhost:8080/api/users/details?email=${email}`
         );
 
         if (userDetailsResponse.ok) {
           const ud = await userDetailsResponse.json();
-          localStorage.setItem("name", ud["username"]);
-          localStorage.setItem("id", ud["id"]);
-          localStorage.setItem("loginid",ud["id"]);
-          console.log("Hello");
-          setUser({ name: ud["name"], email: email, id: ud["id"] });
-          navigate("/courses");
+          localStorage.setItem("name", ud.username);
+          localStorage.setItem("id", ud.id);
+          localStorage.setItem("loginid", ud.id);
+          setUser({ name: ud.username, email: email, id: ud.id });
+          navigate("/");
         } else {
           setError("An error occurred while fetching user details.");
         }
@@ -52,48 +48,48 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <Navbar />
-      <div className="auth">
-        <div className="container">
-          <h3>Welcome!</h3>
-          <br></br>
-          <h2>Login</h2>
-          <br />
-          <form autoComplete="off" className="form-group" onSubmit={login}>
-            <label htmlFor="email">Email Id :</label>
-            <input
-              type="email"
-              className="form-control"
-              style={{ width: "100%", marginRight: "50px" }}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
-            <br />
-            <label htmlFor="password">Password : </label>
-            <input
-              type="password"
-              className="form-control"
-              style={{ width: "100%" }}
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-            <br />
-            <div className="btn1">
-              <button type="submit" className="btn btn-success btn-md mybtn">
-                LOGIN
-              </button>
+      <div className="flex flex-1 justify-center items-center p-6">
+        <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+          <h2 className="text-2xl font-semibold text-gray-800 text-center">Login</h2>
+          <p className="text-gray-600 text-center mb-6">Welcome back! Please enter your details.</p>
+          <form onSubmit={login} className="space-y-4">
+            <div>
+              <label className="block text-gray-700">Email:</label>
+              <input
+                type="email"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
+            <div>
+              <label className="block text-gray-700">Password:</label>
+              <input
+                type="password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all"
+            >
+              Login
+            </button>
           </form>
-          {error && <span className="error-msg">{error}</span>}
-          <br />
-          <span>
-            Don't have an account? Register
-            <Link to="/register"> Here</Link>
-          </span>
+          <p className="text-gray-600 text-sm text-center mt-4">
+            Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Register Here</Link>
+          </p>
         </div>
       </div>
     </div>
   );
 }
+
 export default Login;

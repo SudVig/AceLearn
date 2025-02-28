@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App"; // Import context
 
 function Learnings(){
     const userId = localStorage.getItem("id");
     const [courses , setCourse] = useState([]);
     const navigate = useNavigate();
+    const { NavHeight } = useContext(UserContext);
     useEffect(() => {
         async function fetchCourse() {
           try {
@@ -24,8 +26,8 @@ function Learnings(){
       if (courses.length === 0) {
         return (
           <>
-            <Navbar page="learnings" />
-            <div style={{ textAlign: 'center', marginTop: '10%' }}>
+            {/* <Navbar page="learnings" /> */}
+            <div style={{ textAlign: 'center', marginTop: '10%',  paddingTop:NavHeight}}>
               <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
                 You have not enrolled in any courses yet...!!!
               </h1>
@@ -54,8 +56,8 @@ function Learnings(){
 
     return(
         <>
-        <Navbar page={"learnings"} />
-    <div className="learn-courses-container" style={{marginTop :"20px"}}>
+        {/* <Navbar page={"learnings"} /> */}
+    <div className="learn-courses-container" style={{marginTop :"20px",paddingTop: NavHeight}}>
       {courses.map((course) => (
         <div key={course.id} className="learn-course-card">
         <img src={course.photo} alt={course.courseName} className="learn-course-image" />

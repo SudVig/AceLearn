@@ -119,61 +119,12 @@ nav .navigation ul li a:hover {
 }
 
 /* Home */
-#home {
-  background-image: linear-gradient(rgba(9, 5, 54, 0.3), rgba(5, 4, 46, 0.7)),
-    url("../images/back.jpg");
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 40px;
-}
-#home h2 {
-  color: #fff;
-  font-size: 2.2rem;
-  letter-spacing: 1px;
-}
-#home p {
-  width: 40%;
-  color: #fff;
-  font-size: 0.9rem;
-  line-height: 25px;
-}
-#home .btn {
-  margin-top: 35px;
-}
-#home a {
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 13px 30px;
-  background-color: #fff;
-  font-weight: 600;
-  border-radius: 5px;
-}
-#home a.blue {
-  color: #fff;
-  background-color: rgb(21, 21, 100);
-  transition: 0.3s ease;
-}
-#home a.blue:hover {
-  color: rgb(21, 21, 100);
-  background-color: #fff;
-}
-#home a.yellow {
-  margin-left: 10px;
-  color: #fff;
-  background-color: #e6b632;
-  transition: 0.3s ease;
-}
-#home a.yellow:hover {
-  color: rgb(21, 21, 100);
-  background-color: #fff;
-}
+
+
+
+
+
+
 /* features */
 #features {
   padding: 5vw 8vw 0 8vw;
@@ -579,12 +530,7 @@ nav .navigation ul li.close-button button {
     transition: 0.3s ease;
   }
   /* Home page */
-  #home {
-    padding-top: 0px;
-  }
-  #home p {
-    width: 90%;
-  }
+  
   #features {
     padding: 8vw 4vw 0 4vw;
   }

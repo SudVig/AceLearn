@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router';
 
 import Navbar from '../../Navbar'
 
+
 function ProblemHome() {
-  const { loginId, setloginid } = useContext(UserContext);
+  const { loginId, setloginid ,NavHeight} = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState(null);
   const nav = useNavigate();
@@ -40,8 +41,8 @@ function ProblemHome() {
   }, [loginId, setloginid]);
 
   return (
-    <div className='relative bg-gradient-to-br from-slate-900 to-slate-800'> 
-    <Navbar/>
+    <div style={{paddingTop: NavHeight}} className='relative bg-gradient-to-br from-slate-900 to-slate-800 '> 
+    {/* <Navbar/> */}
       <div id="ov" className='min-h-screen min-w-screen flex flex-row overflow-x-hidden'>
       
          

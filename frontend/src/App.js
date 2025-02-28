@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter , Routes , Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Components/login';
 import Register from './Components/register';
 import Course from './Components/course';
@@ -20,58 +20,66 @@ import ErrorPage from './Components/ErrorPage';
 import AddQuestions from './Components/AddQuestions';
 import Performance from './Components/DashBoard/Performance';
 import DTutors from './Components/DashBoard/DTutors';
-import certificate from './Components/certificate';
+import Certificate from './Components/certificate';
 import Forum from './Components/forum';
 import ProblemHome from './Components/LexoR/Component/ProblemHome';
-import React, { createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 import Coding from './Components/LexoR/Component/Coding';
-export const UserContext=createContext();
+import Navbar from './Components/Navbar';
 
-const MyContextProvider=({children})=>{
-  const [loginId,setloginid]=useState(null);
-  return(
-    <UserContext.Provider value={{
-      loginId,setloginid,
-    }}>
+export const UserContext = createContext();
+
+const MyContextProvider = ({ children }) => {
+  const [loginId, setloginid] = useState(null);
+  const [NavHeight, setNavHeight] = useState(null);
+  return (
+    <UserContext.Provider
+      value={{
+        loginId,
+        setloginid,
+        NavHeight,
+        setNavHeight
+      }}
+    >
       {children}
     </UserContext.Provider>
-  )
-}
-
+  );
+};
 
 function App() {
   return (
-
     <div className="App">
       <MyContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/addquestions/:id" element={<AddQuestions/>}/>
-          <Route path='/dashboard' Component={Dashboard}></Route>
-          <Route path='/login' Component={Login}></Route>
-          <Route path='/register' Component={Register}></Route>
-          <Route path='/' Component={Home}></Route>
-          <Route path='/practice' Component={ProblemHome}></Route>
-          <Route path='/courses' Component={Courses}></Route>
-          <Route path='/course/:id' Component={Course}></Route>
-          <Route path='/discussion/:id' Component={Forum}></Route>
-          <Route path='/certificate/:id' Component={certificate}></Route>
-          <Route path='/assessment/:id' Component={Assessment}></Route>
-          <Route path='/addcourse' Component={AddCourse}></Route>
-          <Route path='/editCourse/:id' Component={EditCourse}></Route>
-          <Route path='/profile' Component={Profile}></Route>
-          <Route path='/Learnings' Component={Learnings}></Route>
-          <Route path='/Dcourses' Component={DCourses}></Route>
-          <Route path='/Dusers' Component={DUsers}></Route>
-          <Route path='/Dtutors' Component={DTutors}></Route>
-          <Route path='/Performance' Component={Performance} />
-          <Route path='*' Component={ErrorPage}></Route>
-          <Route path="/coding/:pblm_id" element={<Coding/>}></Route>
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+        <Navbar page={'home'}  />
+          <Routes>
+         
+            <Route path="/addquestions/:id" element={<AddQuestions />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/practice" element={<ProblemHome />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/course/:id" element={<Course />} />
+            <Route path="/discussion/:id" element={<Forum />} />
+            <Route path="/certificate/:id" element={<Certificate />} />
+            <Route path="/assessment/:id" element={<Assessment />} />
+            <Route path="/addcourse" element={<AddCourse />} />
+            <Route path="/editCourse/:id" element={<EditCourse />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/Learnings" element={<Learnings />} />
+            <Route path="/Dcourses" element={<DCourses />} />
+            <Route path="/Dusers" element={<DUsers />} />
+            <Route path="/Dtutors" element={<DTutors />} />
+            <Route path="/Performance" element={<Performance />} />
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/coding/:pblm_id" element={<Coding />} />
+          </Routes>
+        </BrowserRouter>
+        
       </MyContextProvider>
-      <ToastContainer/>
-
+      <ToastContainer />
     </div>
   );
 }

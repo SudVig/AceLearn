@@ -25,169 +25,64 @@ function RegistrationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch("http://localhost:8080/api/users/add", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       if (response.status === 200) {
-        console.log("Registration successful!");
         navigate("/login");
       } else {
         const data = await response.json();
         setError(data.error);
       }
     } catch (error) {
-      setError("Registration error:", error);
+      setError("Registration failed. Please try again.");
     }
   };
 
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center">
       <Navbar />
-      <div className="registration-auth">
-        <div className="registration-container">
-          <h2>User Registration</h2>
-          <form onSubmit={handleSubmit} className="registration-form">
-            <div className="registration-input-group">
-              <div>
-                <div className="registration-text-area">
-                  <label>Name: </label>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <div className="registration-text-area">
-                  <label>Email Id:</label>
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+      <div className="bg-white shadow-md rounded-lg p-8 mt-6 w-full max-w-lg">
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">User Registration</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {[
+            { label: "Name", name: "username", type: "text" },
+            { label: "Email", name: "email", type: "email" },
+            { label: "Phone No", name: "phno", type: "tel" },
+            { label: "Password", name: "password", type: "password" },
+            { label: "Date of Birth", name: "dob", type: "text" },
+            { label: "Gender", name: "gender", type: "text" },
+            { label: "Location", name: "location", type: "text" },
+            { label: "Profession", name: "profession", type: "text" },
+            { label: "LinkedIn URL", name: "linkedin_url", type: "text" },
+            { label: "GitHub URL", name: "github_url", type: "text" },
+          ].map(({ label, name, type }) => (
+            <div key={name}>
+              <label className="block text-gray-700 font-medium">{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
             </div>
-            <div className="registration-input-group">
-              <div>
-                <div className="registration-text-area">
-                  <label>Phone no:</label>
-                </div>
-                <input
-                  type="tel"
-                  name="phno"
-                  value={formData.phno}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <div className="registration-text-area">
-                  <label>Password:</label>
-                </div>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-            <div className="registration-input-group">
-              <div>
-                <div className="registration-text-area">
-                  <label>Date of Birth:</label>
-                </div>
-                <input
-                  type="text"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <div className="registration-text-area">
-                  <label>Gender:</label>
-                </div>
-                <input
-                  type="text"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="registration-input-group">
-              <div>
-                <div className="registration-text-area">
-                  <label>Location:</label>
-                </div>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <div className="registration-text-area">
-                  <label>Profession:</label>
-                </div>
-                <input
-                  type="text"
-                  name="profession"
-                  value={formData.profession}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="registration-input-group">
-              <div>
-                <div className="registration-text-area">
-                  <label>LinkedIn URL:</label>
-                </div>
-                <input
-                  type="text"
-                  name="linkedin_url"
-                  value={formData.linkedin_url}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <div className="registration-text-area">
-                  <label>GitHub URL:</label>
-                </div>
-                <input
-                  type="text"
-                  name="github_url"
-                  value={formData.github_url}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            {error && <span className="registration-error-msg">{error}</span>}
-            <div className="registration-btn1">
-              <button type="submit">Register</button>
-            </div>
-          </form>
-          <span>
-            Already have an account? login
-            <Link to="/login"> Here</Link>
-          </span>
-        </div>
+          ))}
+          {error && <span className="text-red-500 text-sm">{error}</span>}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+          >
+            Register
+          </button>
+        </form>
+        <p className="text-center text-gray-600 mt-4">
+          Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login here</Link>
+        </p>
       </div>
     </div>
   );
